@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/color_content"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/color"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="17"
+                android:scaleType="fitXY"
+                android:src="@drawable/light_ctrl_2" />
+            <!--
+                <com.hfapp.view.MyColorPickView 
+                    android:id="@+id/color"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="17"/>
+            -->
+        </LinearLayout>
+        <!--
+        <com.hfapp.view.ZigbeeColorPicker
+            android:id="@+id/zc"
+            android:layout_width="40dp"
+            android:layout_height="40dp" >
+        </com.hfapp.view.ZigbeeColorPicker>
+        -->
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="100dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center" >
+
+        <SeekBar
+            android:id="@+id/level"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
+    </LinearLayout>
+
+</LinearLayout>

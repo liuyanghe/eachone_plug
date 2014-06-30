@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F0F0"
+    android:orientation="vertical" >
+    <ScrollView 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:orientation="vertical">
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#8FC227"
+                android:text="@string/add_nav_1"/>
+
+            <ImageView
+                android:layout_width="233dp"
+                android:layout_height="133dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"  
+                android:scaleType="fitCenter"
+                android:src="@drawable/add_nav_1" />
+
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"  
+                android:textColor="#8FC227"
+                android:text="@string/add_nav_2"/>
+            <LinearLayout 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"                
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_marginTop="20dp" 
+	                android:layout_width="139dp"	             
+	                android:layout_height="99dp"
+	                android:scaleType="centerInside"
+	                android:src="@drawable/add_nav_phone"/>
+                <ImageView 
+	                android:layout_width="79dp"
+	                android:layout_height="92dp"
+	                android:layout_marginLeft="20dp"
+	                android:scaleType="centerInside"
+	                android:src="@drawable/add_nav_plug"/>
+            </LinearLayout>
+            <Button 
+                android:id="@+id/next_step"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/registbtnbg"
+                android:text="@string/next_step"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

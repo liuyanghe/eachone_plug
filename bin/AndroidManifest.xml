@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.palytogether"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="13"
+        android:targetSdkVersion="18" />
+	<uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/eachone"
+        android:label="@string/app_name"
+        android:configChanges="orientation|keyboardHidden"
+        android:theme="@android:style/Theme.Holo.Light" >
+        <activity
+            android:name="com.example.palytogether.MainActivity"
+            android:label="@string/app_name" 
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+      
+        <activity android:name="com.example.palytogether.NavViews" 
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"/>
+   		
+   		<activity android:name="com.hfapp.activity.About"/>
+   		
+   		<activity android:name="com.hfapp.activity.Login"
+   		    android:windowSoftInputMode="adjustUnspecified|stateHidden"
+   		     android:theme="@android:style/Theme.Black.NoTitleBar"/>
+   		
+   		<activity android:name="com.hfapp.activity.Regist" 
+   		    android:theme="@android:style/Theme.Black.NoTitleBar"
+   		    android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+   		
+   		<activity android:name="com.hfapp.activity.AddNavActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>
+   		
+   		<activity android:name="com.hfapp.activity.Setting" android:theme="@android:style/Theme.Black.NoTitleBar" android:launchMode="singleInstance"/>
+   		
+   		<activity android:name="com.hfapp.activity.UserModify" 
+   		    android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+   		
+   		<activity android:name="com.hfapp.activity.UserGuide" />
+   		
+   		<activity android:name="com.hfapp.activity.LightModuleInfo"/>
+   		
+   		<activity android:name="com.hfapp.activity.ModuleModify"/>
+   		
+   		<activity android:name="com.hfapp.activity.ImageContentor"/>
+   		
+   		<activity android:name="com.hfapp.activity.TimerCenter"/>
+   		
+   		<activity android:name="com.hfapp.activity.TimerAdder"/>
+   		
+   		<activity android:name="com.hfapp.activity.SmartCtrler"/>
+   		
+   		<activity android:name="com.hfapp.activity.ModuleList" android:theme="@android:style/Theme.Holo.Light"/>
+   		
+   		<activity android:name="com.hfapp.activity.Smartlink"
+   		    android:windowSoftInputMode="adjustUnspecified|stateHidden"
+   		     android:launchMode="singleInstance"/>
+    	
+    	<activity android:name="com.hfapp.activity.ZigbeeModuleInfoActivity" />
+    	
+    	<activity android:name="com.hfapp.activity.LightCtrl"/>
+    	
+    	<activity android:name="com.hfapp.activity.SystemCtrl"/>
+    	
+    	<activity android:name="com.hfapp.activity.ConfigSetting"
+    	    android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+    </application>
+
+</manifest>
