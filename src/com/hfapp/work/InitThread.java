@@ -67,7 +67,7 @@ public class InitThread implements Runnable{
 			}
 			hand.sendEmptyMessage(3);
 		}else{
-			hand.sendEmptyMessage(0);
+			hand.sendEmptyMessage(4);
 		}
 	}
 }

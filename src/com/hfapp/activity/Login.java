@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,12 +18,16 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.palytogether.R;
 import com.example.palytogether.R.color;
+import com.hf.module.IModuleManager;
+import com.hf.module.ManagerFactory;
 import com.hf.module.ModuleConfig;
+import com.hf.module.ModuleException;
 import com.hfapp.work.InitThread;
 
 public class Login extends Activity implements OnClickListener{
@@ -32,7 +37,7 @@ public class Login extends Activity implements OnClickListener{
 	private ImageButton regist;//注册按钮
 	private Button loginBtn;//登录按钮
 	private TextView config;//hiflying模块配置（需要隐藏，调试时候用）s
-	private EditText forget;
+	IModuleManager manager;
 	
 	private Handler hand = new Handler(){//接收线程的信息，做UI处理
 		public void handleMessage(android.os.Message msg) {
@@ -48,11 +53,9 @@ public class Login extends Activity implements OnClickListener{
 				break;
 			case 3: //jump to the ModuleList screen
 				startModuleListActivity();
-				Toast.makeText(Login.this, "login ok", Toast.LENGTH_SHORT).show();
 				break;
 			case 4: //
-//				startModuleListActivity();
-				//Toast.makeText(Login.this, "", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Login.this, "网络异常", Toast.LENGTH_SHORT).show();
 				break;
 			case -103:
 				//Toast.makeText(Login.this, "", Toast.LENGTH_SHORT).show();
@@ -70,6 +73,7 @@ public class Login extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_layout);
+		manager = ManagerFactory.getInstance().getManager();
 		initView();
 	}
 	
@@ -80,7 +84,31 @@ public class Login extends Activity implements OnClickListener{
 		userName = (EditText) findViewById(R.id.user_name);
 		userPswd = (EditText) findViewById(R.id.user_pswd);
 		forgotPswd = (ImageButton) findViewById(R.id.forget_pswd);
+		forgotPswd.setOnTouchListener(new OnTouchListener() {//给登录按钮添加点击事件监听。起颜色变化效果
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					v.setBackgroundResource(R.color.gray);
+				} else if (event.getAction() == MotionEvent.ACTION_UP) {
+					v.setBackgroundResource(color.white);
+				}
+				return false;
+			}
+		});
 		regist = (ImageButton) findViewById(R.id.regist);
+		regist.setOnTouchListener(new OnTouchListener() {//给登录按钮添加点击事件监听。起颜色变化效果
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					v.setBackgroundResource(R.color.gray);
+				} else if (event.getAction() == MotionEvent.ACTION_UP) {
+					v.setBackgroundResource(color.white);
+				}
+				return false;
+			}
+		});
 		loginBtn = (Button) findViewById(R.id.login_btn);
 		loginBtn.setOnTouchListener(new OnTouchListener() {//给登录按钮添加点击事件监听。起颜色变化效果
 
@@ -95,9 +123,6 @@ public class Login extends Activity implements OnClickListener{
 			}
 		});
 		config = (TextView) findViewById(R.id.configconfig);
-		forgotPswd.setOnClickListener(this);
-		regist.setOnClickListener(this);
-		loginBtn.setOnClickListener(this);
 		config.setOnClickListener(new OnClickListener() {//hiflying模块配置信息，点击进入模块设置
 			
 			@Override
@@ -107,6 +132,9 @@ public class Login extends Activity implements OnClickListener{
 				startActivity(i);
 			}
 		});
+		forgotPswd.setOnClickListener(this);
+		regist.setOnClickListener(this);
+		loginBtn.setOnClickListener(this);
 	}
 
 	/*
@@ -169,18 +197,29 @@ public class Login extends Activity implements OnClickListener{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
 				LayoutInflater inflater = getLayoutInflater();
-				builder.setView(inflater.inflate(R.layout.forgetpwd, null))
+				AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+				 final View view = inflater.inflate(R.layout.forgetpwd, null);
+				builder.setView(view)
 					   .setPositiveButton("确认", new DialogInterface.OnClickListener() {
 						
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							//获取输入框的邮箱密码
+							EditText editText = (EditText)view.findViewById(R.id.forget);
+							final String box = editText.getText().toString().trim();
+							new Thread(new Runnable() {
+								public void run() {
+									try {
+										manager.retrievePassword(box, 2);
+									} catch (ModuleException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+							}).start();
 							//把密码发送到该邮箱当中
-							forget = (EditText)findViewById(R.id.forget);
-							String email = forget.getText().toString();
-							Toast.makeText(Login.this, email+"发送成功", 1).show();
+							Toast.makeText(Login.this, "已成功发送信息到"+box+"中，请查收", 1).show();
 						}
 					})
 					   .setNegativeButton("取消", new DialogInterface.OnClickListener() {

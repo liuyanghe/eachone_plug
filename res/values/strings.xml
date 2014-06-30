@@ -20,11 +20,11 @@
 	<string name="inputpswd">输入Wifi密码</string>
 	<string name="regist">注册</string>
 	<string name="loginbtn">登陆</string>
-	<string name="regist_username">用户名</string>
+	<string name="regist_username">用户名(长度不能低于6位)</string>
 	<string name="regist_usernickname">昵称</string>
-	<string name="regist_userpswd">密码</string>
-	<string name="regist_userepswd">重复密码</string>
-	<string name="regist_useremail">邮箱</string>
+	<string name="regist_userpswd">密码(长度不能低于6位)</string>
+	<string name="regist_userepswd">重复密码(长度不能低于6位)</string>
+	<string name="regist_useremail">邮箱(每个邮箱号只能注册一次)</string>
 	<string name="regist_capcha">验证码</string>
 	
 	<string name="add_nav_1">1、找到自己手机的扬声器。</string>

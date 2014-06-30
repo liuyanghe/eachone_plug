@@ -1,6 +1,21 @@
 package com.hfapp.activity;
 
-import org.xml.sax.DTDHandler;
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.View.OnTouchListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.config.Userconfig;
 import com.example.palytogether.MainActivity;
@@ -13,38 +28,17 @@ import com.hf.module.ModuleException;
 import com.hf.module.info.CaptchaImageInfo;
 import com.hf.module.info.UserInfo;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.hardware.input.InputManager;
-import android.os.Bundle;
-import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
-
 public class Regist extends Activity{
-	private EditText username;
-	private EditText userdisplayName;
-	private EditText userpswd;
-	private EditText reuserpswd;
-	private EditText email;
-
-	private EditText capcha;
-
-	private ImageView imageCapcha;
-
-	private Button ok;
-
-	private IModuleManager manager;
-	
+	private EditText username;//用户名
+	private EditText userdisplayName;//昵称
+	private EditText userpswd;//密码
+	private EditText reuserpswd;//重复密码
+	private EditText email;//邮箱
+	private EditText capcha;//验证码
+	private ImageView imageCapcha;//验证码图片
+	private Button ok;//注册按钮
+	private boolean isinPutOk = false;//判断是否合法
+	private IModuleManager manager;//管理者
 	
 	String strusername;
 	String struserpswd;
@@ -59,10 +53,12 @@ public class Regist extends Activity{
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 0:
-				Toast.makeText(Regist.this, "network err", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(Regist.this, "network err", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Regist.this, "网络异常", Toast.LENGTH_SHORT).show();
 				break;
 			case 1:
-				Toast.makeText(Regist.this, "input err", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(Regist.this, "input err", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Regist.this, "输入有误", Toast.LENGTH_SHORT).show();
 				break;
 			case 2:
 				Toast.makeText(Regist.this, "regist ok", Toast.LENGTH_SHORT).show();
@@ -75,19 +71,19 @@ public class Regist extends Activity{
 				finish();
 				break;
 			case -114:
-				Toast.makeText(Regist.this, "capcha timeout", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(Regist.this, "capcha timeout", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Regist.this, "验证码超时", Toast.LENGTH_SHORT).show();
 				break;
 			case -104:
-				Toast.makeText(Regist.this, "usrname is used", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(Regist.this, "usrname is used", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Regist.this, "用户名已经注册", Toast.LENGTH_SHORT).show();
 				break;
+				
 			default:
 				break;
 			}
 		};
 	};
-	
-	
-	private boolean isinPutOk = false;
 	
 	
 	@Override
@@ -100,7 +96,7 @@ public class Regist extends Activity{
 	}
 
 	private void initView() {
-		// TODO Auto-generated method stub
+		// 获取用户名----------------------------------------------------------------------------------
 		username = (EditText) findViewById(R.id.username);
 		username.addTextChangedListener(new TextWatcher() {
 			
@@ -130,7 +126,9 @@ public class Regist extends Activity{
 				}
 			}
 		});
+		// 获取昵称----------------------------------------------------------------------------------
 		userdisplayName = (EditText) findViewById(R.id.userdisplayName);
+		// 获取密码----------------------------------------------------------------------------------
 		userpswd = (EditText) findViewById(R.id.userpswd);
 		userpswd.addTextChangedListener(new TextWatcher() {
 			
@@ -159,6 +157,7 @@ public class Regist extends Activity{
 				}
 			}
 		});
+		// 获取重复----------------------------------------------------------------------------------
 		reuserpswd = (EditText) findViewById(R.id.reuserpswd);
 		reuserpswd.addTextChangedListener(new TextWatcher() {
 			
@@ -188,6 +187,7 @@ public class Regist extends Activity{
 				}
 			}
 		});
+		// 获取邮箱----------------------------------------------------------------------------------
 		email = (EditText) findViewById(R.id.email);
 		email.addTextChangedListener(new TextWatcher() {
 			
@@ -217,6 +217,7 @@ public class Regist extends Activity{
 				}
 			}
 		});
+		// 获取验证码----------------------------------------------------------------------------------
 		capcha = (EditText) findViewById(R.id.capcha);
 		capcha.addTextChangedListener(new TextWatcher() {
 			
@@ -246,6 +247,7 @@ public class Regist extends Activity{
 				}
 			}
 		});
+		// 设置验证图片----------------------------------------------------------------------------------
 		imageCapcha = (ImageView) findViewById(R.id.imageCacha);
 		imageCapcha.setOnClickListener(new OnClickListener() {
 			
@@ -255,6 +257,7 @@ public class Regist extends Activity{
 				setCpacha();
 			}
 		});
+		// 登录按钮----------------------------------------------------------------------------------
 		ok = (Button) findViewById(R.id.ok);
 		setCpacha();
 		ok.setOnClickListener(new OnClickListener() {
@@ -262,12 +265,13 @@ public class Regist extends Activity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(isinPutOk)
+				if(isinPutOk = true)
 					doRegister();
-				else
+				else if(isinPutOk = false)
 					hand.sendEmptyMessage(1);
 			}
 		});
+		// 注册按钮添加效果------------------------------------------------------------------------
 		ok.setOnTouchListener(new OnTouchListener() {
 
 			@Override
@@ -282,12 +286,12 @@ public class Regist extends Activity{
 		});
 	}
 	
+	// 注册
 	private void doRegister(){
 		new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				UserInfo ui = new UserInfo();
 				ui.setAccessKey(ModuleConfig.accessKey);
 				ui.setUserName(strusername);
@@ -306,6 +310,7 @@ public class Regist extends Activity{
 		}).start();
 	}
 	
+	// 设置验证图片
 	private void setCpacha() {
 		new Thread(new Runnable() {
 
